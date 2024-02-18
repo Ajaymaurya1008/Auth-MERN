@@ -18,6 +18,10 @@ const authRouter = require("./routes/auth");
 
 app.use("/api/v1/auth", authRouter);
 
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
