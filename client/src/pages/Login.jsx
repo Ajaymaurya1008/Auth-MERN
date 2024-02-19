@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
-
-  const [user,setUser] = useState({
+  const [user, setUser] = useState({
     email: "",
     password: "",
   });
@@ -13,22 +14,39 @@ const Login = () => {
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-  }
+  };
 
-  const loginUser = () => { 
-    console.log(user);
-    navigate("/dashboard");
-  }
-
+  const loginUser = async () => {
+    try {
+      console.log(user);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URI}/api/v1/auth/login`,
+        user
+      );
+      console.log(response);
+      console.log(response.data);
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        toast.success("Login successful");
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.msg);
+    }
+  };
 
   return (
     <main className="w-full flex">
       <div className="relative flex-1 hidden items-center justify-center h-screen bg-gray-900 lg:flex">
         <div className="relative z-10 w-full max-w-md">
-          <img src="https://floatui.com/logo-dark.svg" width={150} />
+          <img
+            src="https://res.cloudinary.com/dp9kpxfpa/image/upload/v1708323565/auth-mern-high-resolution-logo-white-transparent_jq3olx.png"
+            width={250}
+          />
           <div className=" mt-16 space-y-3">
             <h3 className="text-white text-3xl font-bold">
-              Start growing your business quickly
+              Welcome to your Auth MERN
             </h3>
             <p className="text-gray-300">
               Login to your account to manage your business.

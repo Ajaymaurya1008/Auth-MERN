@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -19,22 +20,35 @@ const SignUp = () => {
   const signUpUser = async () => {
     try {
       console.log(user);
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URI}/api/v1/auth/register`, user);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URI}/api/v1/auth/register`,
+        user
+      );
       console.log(response.data);
+      if (response.status === 201) {
+        toast.success("Account created successfully");
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error);
+      if (error.response.data.err.code===11000){
+        toast.error("Email already exists");
+      }
+      toast.error(error.response.data.message);
     }
-
   };
 
   return (
     <main className="w-full flex">
       <div className="relative flex-1 hidden items-center justify-center h-screen bg-gray-900 lg:flex">
         <div className="relative z-10 w-full max-w-md">
-          <img src="https://floatui.com/logo-dark.svg" width={150} />
+          <img
+            src="https://res.cloudinary.com/dp9kpxfpa/image/upload/v1708323565/auth-mern-high-resolution-logo-white-transparent_jq3olx.png"
+            width={250}
+          />
           <div className=" mt-16 space-y-3">
             <h3 className="text-white text-3xl font-bold">
-              Start growing your business quickly
+              Start your journey with us
             </h3>
             <p className="text-gray-300">
               Create an account and get access to all features for 30-days, No

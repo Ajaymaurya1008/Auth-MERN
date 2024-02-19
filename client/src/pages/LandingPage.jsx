@@ -1,10 +1,9 @@
-import {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
-
-  const [state, setState] = useState(false)
-  const navigate = useNavigate()
+  const [state, setState] = useState(false);
+  const navigate = useNavigate();
   const navigation = [
     { title: "Customers", path: "javascript:void(0)" },
     { title: "Careers", path: "javascript:void(0)" },
@@ -20,8 +19,8 @@ const LandingPage = () => {
           <div className="flex justify-between">
             <a href="javascript:void(0)">
               <img
-                src="https://www.floatui.com/logo.svg"
-                width={120}
+                src="https://res.cloudinary.com/dp9kpxfpa/image/upload/v1708323393/auth-mern-high-resolution-logo-transparent_gugpdw.png"
+                width={150}
                 height={50}
                 alt="Float UI logo"
               />
@@ -120,6 +119,6 @@ const LandingPage = () => {
       </section>
     </>
   );
-}
+};
 
-export default LandingPage
+export default LandingPage;
