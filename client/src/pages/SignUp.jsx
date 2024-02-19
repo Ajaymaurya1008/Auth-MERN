@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -15,8 +16,15 @@ const SignUp = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const signUpUser = () => {
-    console.log(user);
+  const signUpUser = async () => {
+    try {
+      console.log(user);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URI}/api/v1/auth/register`, user);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+
   };
 
   return (
